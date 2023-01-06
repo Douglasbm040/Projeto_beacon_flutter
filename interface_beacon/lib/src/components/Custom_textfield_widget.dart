@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CustomTextFieldWidget extends StatelessWidget {
-  String _text;
+  final String _text;
 
-  CustomTextFieldWidget({super.key, required String label}) : _text = label;
+  const CustomTextFieldWidget({super.key, required String label})
+      : _text = label;
   @override
   Widget build(BuildContext context) {
     return TextField(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:interface_beacon/src/components/Custom_textfield_widget.dart';
+import 'package:interface_beacon/src/components/custom_textfield_widget.dart';
 
 class AuthFormWidget extends StatelessWidget {
   const AuthFormWidget({super.key});

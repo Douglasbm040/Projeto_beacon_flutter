@@ -21,7 +21,7 @@ class LoadingWidget extends StatelessWidget {
             ),
             const Text(
               "carregando",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white)
             ),
           ],
         ),
