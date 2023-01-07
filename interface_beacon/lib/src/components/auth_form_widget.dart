@@ -28,8 +28,10 @@ class AuthFormWidget extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pushNamed('/home');
                 },
-                child: const Text("Entrar")),
-            TextButton(onPressed: () {}, child: const Text('logar'))
+                child: SizedBox(
+                    height: 50, child: Center(child: const Text("Entrar")))),
+            SizedBox(height: 20),
+            TextButton(onPressed: () {}, child: const Text('logar')),
           ],
         )),
       ),
