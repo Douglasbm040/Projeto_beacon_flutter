@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:interface_beacon/src/pages/home_page.dart';
-import 'package:interface_beacon/src/pages/auth_page.dart';
+import 'package:interface_beacon/src/modules/home/page/home_page.dart';
+import 'package:interface_beacon/src/modules/auth/page/auth_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

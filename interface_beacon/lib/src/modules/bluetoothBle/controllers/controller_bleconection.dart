@@ -1,14 +1,18 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+
+enum conexao { conectado, disconectado, fail }
 
 class ControllerBleConector extends ChangeNotifier {
   final FlutterReactiveBle _ble;
 
-  ControllerBleConector({required FlutterReactiveBle ble,}):_ble = ble;
+  ControllerBleConector({
+    required FlutterReactiveBle ble,
+  }) : _ble = ble;
+  conexao _plug = conexao.disconectado;
 
-  
+  conexao get plug => _plug;
   @override
   Stream<ConnectionStateUpdate> get state => _deviceConnectionController.stream;
 
@@ -22,6 +26,7 @@ class ControllerBleConector extends ChangeNotifier {
       (update) {
         print('ConnectionState for device $deviceId ');
         _deviceConnectionController.add(update);
+        _plug = conexao.conectado;
       },
       onError: (Object e) =>
           print('Connecting to device $deviceId resulted in error $e'),
@@ -32,6 +37,7 @@ class ControllerBleConector extends ChangeNotifier {
     try {
       print('disconnecting to device: $deviceId');
       await _connection.cancel();
+      _plug = conexao.disconectado;
     } on Exception catch (e, _) {
       print("Error disconnecting from a device: $e");
     } finally {
