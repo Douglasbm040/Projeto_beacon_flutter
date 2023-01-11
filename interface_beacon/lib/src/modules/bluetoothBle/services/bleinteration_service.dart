@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleinteration_interface.dart';
 
-class ControllerBleInteration extends ChangeNotifier {
+class BleInterationService extends ChangeNotifier implements IBleInteration {
   final Future<void> Function(QualifiedCharacteristic characteristic,
       {required List<int> value}) _writeWithoutResponse;
 
-  ControllerBleInteration({
-    required Future<void> Function(QualifiedCharacteristic characteristic,
-            {required List<int> value})
-        writeWithoutResponse})
+  BleInterationService(
+      {required Future<void> Function(QualifiedCharacteristic characteristic,
+              {required List<int> value})
+          writeWithoutResponse})
       : _writeWithoutResponse = writeWithoutResponse;
-  
-  
-  
+
+  @override
   Future<void> writeCharacterisiticWithoutResponse(
       QualifiedCharacteristic characteristic, List<int> value) async {
     try {

@@ -1,9 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:interface_beacon/src/components/Custom_textfield_widget.dart';
+import '../../custom/components/custom_textfield_widget.dart';
 
 class HomeCadastroFormWidget extends StatelessWidget {
   const HomeCadastroFormWidget(
@@ -40,9 +36,9 @@ class HomeCadastroFormWidget extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {},
-              child: SizedBox(
+              child: const SizedBox(
                   height: 50,
-                  child: Center(child: const Text("compartilhar localização"))),
+                  child: Center(child: Text("compartilhar localização"))),
             ),
             const SizedBox(height: 40),
           ],

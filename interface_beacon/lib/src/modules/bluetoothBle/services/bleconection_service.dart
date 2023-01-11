@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleconection_interface.dart';
 
 enum conexao { conectado, disconectado, fail }
 
-class ControllerBleConector extends ChangeNotifier {
+class BleConectorService extends ChangeNotifier implements IBleConection{
   final FlutterReactiveBle _ble;
 
-  ControllerBleConector({
+  BleConectorService({
     required FlutterReactiveBle ble,
   }) : _ble = ble;
   conexao _plug = conexao.disconectado;
 
+  @override
   conexao get plug => _plug;
   @override
   Stream<ConnectionStateUpdate> get state => _deviceConnectionController.stream;

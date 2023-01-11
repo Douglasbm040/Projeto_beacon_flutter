@@ -1,20 +1,24 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:interface_beacon/src/modules/bluetoothBle/controllers/controller_bleinteration.dart';
+import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleconection_interface.dart';
+import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleinteration_interface.dart';
+import 'package:interface_beacon/src/modules/bluetoothBle/services/bleinteration_service.dart';
+import 'package:interface_beacon/src/modules/db/firebase/interfaces/database_interface.dart';
+import 'package:interface_beacon/src/modules/db/firebase/repository/database_repository.dart';
 
-import '../../bluetoothBle/controllers/controller_bleconection.dart';
-
+import '../../bluetoothBle/services/bleconection_service.dart';
 
 class HomeAtualizaFormWidget extends StatelessWidget {
   HomeAtualizaFormWidget({
     super.key,
     required this.plugin,
     required this.interation,
+    required this.DB,
   });
-
-  final ControllerBleConector plugin;
-  final ControllerBleInteration interation;
+  final DataBaseInterface DB;
+  final IBleConection plugin;
+  final IBleInteration interation;
 
   final Uuid _myServiceUuid = //! adicionar automaticamente caracterista do ble
       Uuid.parse("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
@@ -60,12 +64,14 @@ class HomeAtualizaFormWidget extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                interation.writeCharacterisiticWithoutResponse(
+                /*interation.writeCharacterisiticWithoutResponse(
                     QualifiedCharacteristic(
                         characteristicId: _myCharacteristicUuid,
                         serviceId: _myServiceUuid,
                         deviceId: device_id),
-                    utf8.encode("olas"));
+                    utf8.encode("olas"));*/
+                DB.insert();
+                DB.requisition();
               },
               child: const SizedBox(
                 height: 50,

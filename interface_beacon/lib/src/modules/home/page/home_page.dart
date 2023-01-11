@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:interface_beacon/src/modules/bluetoothBle/controllers/controller_bleconection.dart';
-import 'package:interface_beacon/src/modules/bluetoothBle/controllers/controller_bleinteration.dart';
+import 'package:interface_beacon/src/modules/bluetoothBle/services/bleconection_service.dart';
+import 'package:interface_beacon/src/modules/bluetoothBle/services/bleinteration_service.dart';
+import 'package:interface_beacon/src/modules/db/firebase/repository/database_repository.dart';
 import 'package:provider/provider.dart';
 
 import '../components/home_atualiza_form_widget.dart';
@@ -8,7 +9,7 @@ import '../components/home_cadastro_form_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,15 +36,16 @@ class HomePage extends StatelessWidget {
             title: const Text('Bem vindo a interface beacon'),
           ),
           body: TabBarView(children: [
-              const HomeCadastroFormWidget(
-                title: "Cadastre o seu beacon",
-                titlebuttom: "enviar dados",
-              ),
-            
-            Consumer2<ControllerBleConector,ControllerBleInteration>(
-              builder:(context, conector, response,child) => HomeAtualizaFormWidget(
-               plugin: conector,
-               interation: response,
+            const HomeCadastroFormWidget(
+              title: "Cadastre o seu beacon",
+              titlebuttom: "enviar dados",
+            ),
+            Consumer3<BleConectorService, BleInterationService, DataBaseRepository>(
+              builder: (context, conector, response, banco, child) =>
+                  HomeAtualizaFormWidget(
+                plugin: conector,
+                interation: response,
+                DB: banco,
               ),
             ),
           ]),
