@@ -1,4 +1,5 @@
 abstract class DataBaseInterface {
-  Future<void> insert();
-  Future<void> requisition();
+  insert({required Map<String, dynamic> value});
+  requisition();
+  Map get device => device;
 }

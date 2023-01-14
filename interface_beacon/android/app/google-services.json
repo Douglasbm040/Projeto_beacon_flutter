@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "879464723021",
+    "firebase_url": "https://bancodedados-dd5bd.firebaseio.com",
+    "project_id": "bancodedados-dd5bd",
+    "storage_bucket": "bancodedados-dd5bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:879464723021:android:1a626e6009cd0beb8c6204",
+        "android_client_info": {
+          "package_name": "com.example.interface_beacon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "879464723021-38m3gghrgtfjc01na8n97848g3pq35e1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7JTIFotkdhBZfp4Jhv1UeaUabVrfCuLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "879464723021-38m3gghrgtfjc01na8n97848g3pq35e1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:879464723021:android:01ef2442165c4ae1",
+        "android_client_info": {
+          "package_name": "com.my.bancotest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "879464723021-38m3gghrgtfjc01na8n97848g3pq35e1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7JTIFotkdhBZfp4Jhv1UeaUabVrfCuLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "879464723021-38m3gghrgtfjc01na8n97848g3pq35e1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

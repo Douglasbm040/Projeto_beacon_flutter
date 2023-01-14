@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/services/bleconection_service.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/services/bleinteration_service.dart';
 import 'package:interface_beacon/src/modules/db/firebase/repository/database_repository.dart';
+import 'package:interface_beacon/src/modules/qrscanner/service/qrscanner_service.dart';
 import 'package:provider/provider.dart';
 
 import '../components/home_atualiza_form_widget.dart';
@@ -16,15 +18,6 @@ class HomePage extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: Colors.green,
-            child: const Icon(
-              Icons.volume_up_rounded,
-              size: 50,
-              semanticLabel: "botao para a ligar som",
-            ),
-          ),
           backgroundColor: Theme.of(context).primaryColorDark,
           appBar: AppBar(
             bottom: const TabBar(
@@ -36,16 +29,22 @@ class HomePage extends StatelessWidget {
             title: const Text('Bem vindo a interface beacon'),
           ),
           body: TabBarView(children: [
-            const HomeCadastroFormWidget(
-              title: "Cadastre o seu beacon",
-              titlebuttom: "enviar dados",
+            Consumer2<QrScannerService, DataBaseRepository>(
+              builder: (context, qrscannerservice, firebase, child) =>
+                  HomeCadastroFormWidget(
+                title: "Cadastre o seu beacon",
+                titlebuttom: "enviar dados",
+                qrscanner: qrscannerservice,
+                dataBase: firebase,
+              ),
             ),
-            Consumer3<BleConectorService, BleInterationService, DataBaseRepository>(
-              builder: (context, conector, response, banco, child) =>
+            Consumer3<BleConectorService, BleInterationService,
+                DataBaseRepository>(
+              builder: (context, conector, response, firebase, child) =>
                   HomeAtualizaFormWidget(
                 plugin: conector,
                 interation: response,
-                DB: banco,
+                dataBase: firebase,
               ),
             ),
           ]),

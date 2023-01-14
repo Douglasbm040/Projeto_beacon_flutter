@@ -5,7 +5,14 @@ import 'package:interface_beacon/src/modules/bluetoothBle/services/bleinteration
 import 'package:interface_beacon/src/modules/db/firebase/repository/database_repository.dart';
 import 'package:interface_beacon/src/modules/home/page/home_page.dart';
 import 'package:interface_beacon/src/modules/auth/page/auth_page.dart';
+import 'package:interface_beacon/src/modules/qrscanner/service/qrscanner_service.dart';
+import 'package:interface_beacon/src/modules/routecadastre/pages/cadastre_final_page.dart';
+import 'package:interface_beacon/src/modules/routecadastre/pages/cadastre_id_page.dart';
+import 'package:interface_beacon/src/modules/routecadastre/pages/cadastre_scan_page.dart';
 import 'package:provider/provider.dart';
+
+import 'modules/routecadastre/components/card_cadastre_widget.dart';
+import 'modules/routecadastre/pages/cadastre__start_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,6 +23,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider<QrScannerService>(
+              create: (context) => QrScannerService()),
           ChangeNotifierProvider<DataBaseRepository>(
             create: (context) => DataBaseRepository(),
           ),
@@ -35,7 +44,11 @@ class App extends StatelessWidget {
           initialRoute: "/",
           routes: {
             '/': (context) => const AuthPage(),
-            '/home': (context) => const HomePage()
+            '/start': (context) => const CadastreStartPage(),
+            '/home': (context) => const HomePage(),
+            '/scan': (context) => const CadastreScanPage(),
+            '/id': (context) => const CadastreIdPage(),
+            '/final': (context) => const CadastreFinalPage(),
           },
         ));
   }

@@ -20,17 +20,17 @@ class AuthFormWidget extends StatelessWidget {
               size: 150,
               color: Colors.blue,
             ),
-            CustomTextFieldWidget(label: "user"),
+            const CustomTextFieldWidget(label: "email"),
             const SizedBox(height: 10),
-            CustomTextFieldWidget(label: 'Password'),
+            const CustomTextFieldWidget(label: 'senha'),
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed('/home');
                 },
-                child: SizedBox(
-                    height: 50, child: Center(child: const Text("Entrar")))),
-            SizedBox(height: 20),
+                child: const SizedBox(
+                    height: 50, child: Center(child: Text("Entrar")))),
+            const SizedBox(height: 20),
             TextButton(onPressed: () {}, child: const Text('logar')),
           ],
         )),

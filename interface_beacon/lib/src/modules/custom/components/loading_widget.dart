@@ -19,10 +19,7 @@ class LoadingWidget extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              "carregando",
-              style: TextStyle(color: Colors.white)
-            ),
+            const Text("carregando", style: TextStyle(color: Colors.white)),
           ],
         ),
       ),
