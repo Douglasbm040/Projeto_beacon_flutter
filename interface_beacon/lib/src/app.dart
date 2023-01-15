@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/services/bleconection_service.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/services/bleinteration_service.dart';
+import 'package:interface_beacon/src/modules/custom/controllers/custom_textfield_controller.dart';
 import 'package:interface_beacon/src/modules/db/firebase/repository/database_repository.dart';
 import 'package:interface_beacon/src/modules/home/page/home_page.dart';
 import 'package:interface_beacon/src/modules/auth/page/auth_page.dart';
@@ -23,6 +24,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider<CustomTextfieldController>(
+              create: ((context) => CustomTextfieldController())),
           ChangeNotifierProvider<QrScannerService>(
               create: (context) => QrScannerService()),
           ChangeNotifierProvider<DataBaseRepository>(
@@ -30,6 +33,7 @@ class App extends StatelessWidget {
           ),
           ChangeNotifierProvider<BleInterationService>(
             create: (context) => BleInterationService(
+                requestSpace: _ble.requestMtu,
                 writeWithoutResponse: _ble.writeCharacteristicWithoutResponse),
           ),
           ChangeNotifierProvider<BleConectorService>(
@@ -47,7 +51,7 @@ class App extends StatelessWidget {
             '/start': (context) => const CadastreStartPage(),
             '/home': (context) => const HomePage(),
             '/scan': (context) => const CadastreScanPage(),
-            '/id': (context) => const CadastreIdPage(),
+            //'/id': (context) => const CadastreIdPage(),
             '/final': (context) => const CadastreFinalPage(),
           },
         ));

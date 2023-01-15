@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:interface_beacon/src/modules/custom/components/custom_textfield_widget.dart';
+import 'package:interface_beacon/src/modules/custom/controllers/custom_textfield_controller.dart';
 
 class AuthFormWidget extends StatelessWidget {
-  const AuthFormWidget({super.key});
+  const AuthFormWidget({super.key, required this.controller});
+
+  final CustomTextfieldController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +23,13 @@ class AuthFormWidget extends StatelessWidget {
               size: 150,
               color: Colors.blue,
             ),
-            const CustomTextFieldWidget(label: "email"),
+            CustomTextFieldWidget(
+                label: "email", controller: controller.usuario),
             const SizedBox(height: 10),
-            const CustomTextFieldWidget(label: 'senha'),
+            CustomTextFieldWidget(
+              label: 'senha',
+              controller: controller.senha,
+            ),
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {

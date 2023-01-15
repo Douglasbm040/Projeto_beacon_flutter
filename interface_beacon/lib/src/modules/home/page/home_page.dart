@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/services/bleconection_service.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/services/bleinteration_service.dart';
+import 'package:interface_beacon/src/modules/custom/controllers/custom_textfield_controller.dart';
 import 'package:interface_beacon/src/modules/db/firebase/repository/database_repository.dart';
 import 'package:interface_beacon/src/modules/qrscanner/service/qrscanner_service.dart';
 import 'package:provider/provider.dart';
@@ -29,13 +30,14 @@ class HomePage extends StatelessWidget {
             title: const Text('Bem vindo a interface beacon'),
           ),
           body: TabBarView(children: [
-            Consumer2<QrScannerService, DataBaseRepository>(
-              builder: (context, qrscannerservice, firebase, child) =>
+            Consumer3<QrScannerService, DataBaseRepository,CustomTextfieldController>(
+              builder: (context, qrscannerservice, firebase,controller, child) =>
                   HomeCadastroFormWidget(
                 title: "Cadastre o seu beacon",
                 titlebuttom: "enviar dados",
                 qrscanner: qrscannerservice,
                 dataBase: firebase,
+                controller: controller,
               ),
             ),
             Consumer3<BleConectorService, BleInterationService,

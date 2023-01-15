@@ -18,7 +18,7 @@ class HomeAtualizaFormWidget extends StatelessWidget {
   final IBleConection plugin;
   final IBleInteration interation;
 
-  final Uuid _myServiceUuid = //! adicionar automaticamente caracterista do ble
+  /*final Uuid _myServiceUuid = //! adicionar automaticamente caracterista do ble
       Uuid.parse("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
   final Uuid _myCharacteristicUuid =
       Uuid.parse("beb5483e-36e1-4688-b7f5-ea07361b26a8");
@@ -32,7 +32,7 @@ class HomeAtualizaFormWidget extends StatelessWidget {
     "serviceUuid": "4fafc201-1fb5-459e-8fcc-c5c9c331914b",
     "CharacteristicUuid": "beb5483e-36e1-4688-b7f5-ea07361b26a8"
   };
-
+*/
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -57,8 +57,8 @@ class HomeAtualizaFormWidget extends StatelessWidget {
                   backgroundColor: plugin.plug == conexao.conectado
                       ? Colors.green
                       : Colors.blue),
-              onPressed: () {
-                plugin.connect(device_id);
+              onPressed: () async {
+                await plugin.connect(dataBase.device["device_id"]);
               },
               child: const SizedBox(
                   height: 50, child: Center(child: Text("conectar"))),
@@ -71,21 +71,28 @@ class HomeAtualizaFormWidget extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: ()async{
+              onPressed: () async {
                 await dataBase.requisition();
-                print(dataBase.device.toString());
+                print(json.encode(dataBase.device));
                 print(dataBase.device["CharacteristicUuid"]);
-                print(dataBase.device["serviceUuid "]);
-                print(dataBase.device["device_id "]);
-                String text = "{\"device_id \":"+"\""+"sada"+"\""+"}";
+                print(dataBase.device["serviceUuid"]);
+                print(dataBase.device["device_id"]);
+                await interation.requestMtu(dataBase.device["device_id"], 250);
                 interation.writeCharacterisiticWithoutResponse(
                   QualifiedCharacteristic(
                       characteristicId:
                           Uuid.parse(dataBase.device["CharacteristicUuid"]),
-                      serviceId: Uuid.parse(dataBase.device["serviceUuid "]),
-                      deviceId: dataBase.device["device_id "]),
+                      serviceId: Uuid.parse(dataBase.device["serviceUuid"]),
+                      deviceId: dataBase.device["device_id"]),
                   utf8.encode(
-                    dataBase.device.toString(),
+                    
+                    json.encode({
+                      "n" : dataBase.device["deviceName"],
+                      "lt": dataBase.device["lat"],
+                      "lg": dataBase.device["long"],
+                      "d" : dataBase.device["descricao"]
+                    })
+                    ,
                   ),
                 );
                 // dataBase.insert(value: device);
@@ -98,6 +105,7 @@ class HomeAtualizaFormWidget extends StatelessWidget {
                 ),
               ),
             ),
+          
           ],
         )),
       ),

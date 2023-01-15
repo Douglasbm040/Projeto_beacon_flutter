@@ -5,12 +5,16 @@ import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleinterati
 class BleInterationService extends ChangeNotifier implements IBleInteration {
   final Future<void> Function(QualifiedCharacteristic characteristic,
       {required List<int> value}) _writeWithoutResponse;
-
-  BleInterationService(
-      {required Future<void> Function(QualifiedCharacteristic characteristic,
-              {required List<int> value})
-          writeWithoutResponse})
-      : _writeWithoutResponse = writeWithoutResponse;
+  final Future<int> Function({required String deviceId, required int mtu})
+      _resquestSpace;
+  BleInterationService({
+    required Future<void> Function(QualifiedCharacteristic characteristic,
+            {required List<int> value})
+        writeWithoutResponse,
+    required Future<int> Function({required String deviceId, required int mtu})
+        requestSpace,
+  })  : _writeWithoutResponse = writeWithoutResponse,
+        _resquestSpace = requestSpace;
 
   @override
   Future<void> writeCharacterisiticWithoutResponse(
@@ -25,6 +29,18 @@ class BleInterationService extends ChangeNotifier implements IBleInteration {
       );
       // ignore: avoid_print
       print(s);
+      rethrow;
+    }
+  }
+
+  //Future<int> requestMtu({required String deviceId, required int mtu})
+  @override
+  Future<int> requestMtu(String deviceId, int mtu) async {
+    try {
+      final resultado = await _resquestSpace(deviceId: deviceId, mtu: mtu);
+      return resultado;
+    } catch (e) {
+      print(e);
       rethrow;
     }
   }
