@@ -1,2 +1,3 @@
 # Projeto_beacon_flutter
  
+Proposta de um guia de acessibilidade e locomoção urbana para deficientes visuais, através de dispositivos de Internet das Coisas (IoT). Desenvolver um protótipo de um aplicativo móvel que permita a acessibilidade de um deficiente visual pelo campus da UFES, conjugado aos demais instrumentos de locomoção do mesmo, cujo escopo principal é uma interface gráfica adaptada ao deficiente visual. Através da experimentação do aplicativo e seu uso, será feita uma análise dos resultados obtidos, visando à expansão e implementação completa do aplicativo em pesquisas futuras. Orientado pelo professor Giuliano Prado
