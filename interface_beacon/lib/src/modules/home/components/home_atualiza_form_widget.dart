@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleconection_interface.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleinteration_interface.dart';
-import 'package:interface_beacon/src/modules/db/firebase/interfaces/database_interface.dart';
+import 'package:interface_beacon/src/modules/database/firebase/interfaces/database_interface.dart';
 import '../../bluetoothBle/services/bleconection_service.dart';
 
 class HomeAtualizaFormWidget extends StatelessWidget {
@@ -88,8 +88,8 @@ class HomeAtualizaFormWidget extends StatelessWidget {
                     
                     json.encode({
                       "n" : dataBase.device["deviceName"],
-                      "lt": dataBase.device["lat"],
-                      "lg": dataBase.device["long"],
+                      "lt": dataBase.device["latitude"], //! verificar as chave , arduino recebendo null !
+                      "lg": dataBase.device["longitude"],//! verificar as chave , arduino recebendo null !
                       "d" : dataBase.device["descricao"]
                     })
                     ,

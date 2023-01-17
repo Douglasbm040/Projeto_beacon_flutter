@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:interface_beacon/src/modules/db/firebase/interfaces/database_interface.dart';
+import 'package:interface_beacon/src/modules/database/firebase/interfaces/database_interface.dart';
 import 'package:interface_beacon/src/shared/models/beacon_device.dart';
 
 class DataBaseRepository extends ChangeNotifier implements DataBaseInterface {
