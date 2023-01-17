@@ -5,6 +5,7 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleconection_interface.dart';
 import 'package:interface_beacon/src/modules/bluetoothBle/interfaces/bleinteration_interface.dart';
 import 'package:interface_beacon/src/modules/database/firebase/interfaces/database_interface.dart';
+import 'package:interface_beacon/src/modules/database/firebase/repository/database_repository.dart';
 import '../../bluetoothBle/services/bleconection_service.dart';
 
 class HomeAtualizaFormWidget extends StatelessWidget {
@@ -54,10 +55,13 @@ class HomeAtualizaFormWidget extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: plugin.plug == conexao.conectado
-                      ? Colors.green
-                      : Colors.blue),
+                  backgroundColor: plugin.plug == conexao.disconectado
+                      ? Colors.blue
+                      : plugin.plug != conexao.conectado
+                          ? Colors.red
+                          : Colors.green),
               onPressed: () async {
+                await dataBase.requisition();
                 await plugin.connect(dataBase.device["device_id"]);
               },
               child: const SizedBox(
@@ -71,12 +75,14 @@ class HomeAtualizaFormWidget extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: dataBase.state != StateFirebase.insertcorrect
+                      ? Colors.blue
+                      : dataBase.state != StateFirebase.insertcorrect
+                          ? Colors.red
+                          : Colors.green),
               onPressed: () async {
                 await dataBase.requisition();
-                print(json.encode(dataBase.device));
-                print(dataBase.device["CharacteristicUuid"]);
-                print(dataBase.device["serviceUuid"]);
-                print(dataBase.device["device_id"]);
                 await interation.requestMtu(dataBase.device["device_id"], 250);
                 interation.writeCharacterisiticWithoutResponse(
                   QualifiedCharacteristic(
@@ -85,14 +91,12 @@ class HomeAtualizaFormWidget extends StatelessWidget {
                       serviceId: Uuid.parse(dataBase.device["serviceUuid"]),
                       deviceId: dataBase.device["device_id"]),
                   utf8.encode(
-                    
                     json.encode({
-                      "n" : dataBase.device["deviceName"],
-                      "lt": dataBase.device["latitude"], //! verificar as chave , arduino recebendo null !
-                      "lg": dataBase.device["longitude"],//! verificar as chave , arduino recebendo null !
-                      "d" : dataBase.device["descricao"]
-                    })
-                    ,
+                      "n": dataBase.device["deviceName"],
+                      "lt": dataBase.device["latitude"],
+                      "lg": dataBase.device["longitude"],
+                      "d": dataBase.device["descricao"]
+                    }),
                   ),
                 );
                 // dataBase.insert(value: device);
@@ -105,7 +109,6 @@ class HomeAtualizaFormWidget extends StatelessWidget {
                 ),
               ),
             ),
-          
           ],
         )),
       ),

@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:interface_beacon/src/modules/custom/controllers/custom_textfield_controller.dart';
 import 'package:interface_beacon/src/modules/database/firebase/interfaces/database_interface.dart';
+import 'package:interface_beacon/src/modules/database/firebase/repository/database_repository.dart';
 import 'package:interface_beacon/src/modules/gps/interface/gps_interface.dart';
 import 'package:interface_beacon/src/modules/gps/services/gps_service.dart';
 import 'package:interface_beacon/src/modules/qrscanner/interface/qrscanner_interface.dart';
+import 'package:interface_beacon/src/modules/qrscanner/service/qrscanner_service.dart';
 import '../../custom/components/custom_textfield_widget.dart';
 
 class HomeCadastroFormWidget extends StatelessWidget {
@@ -80,7 +82,13 @@ class HomeCadastroFormWidget extends StatelessWidget {
                     const Text("Aperte o botão abaixo e scane o QRcode"),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      //! os espaço podem esta vindo o qr code
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: qrscanner.state ==
+                                  StateQrScannerService.start
+                              ? Colors.blue
+                              : qrscanner.state != StateQrScannerService.found
+                                  ? Colors.red
+                                  : Colors.green),
                       onPressed: () async {
                         await qrscanner.readQrcode();
                       },
@@ -112,6 +120,14 @@ class HomeCadastroFormWidget extends StatelessWidget {
                         "Ligue o Gps do celular.  encoste o celular no aparelho. Aperte o botão abaixo"),
                     const SizedBox(height: 20),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              localization.state != StateGpsService.startservice
+                                  ? Colors.blue
+                                  : localization.state !=
+                                          StateGpsService.localization
+                                      ? Colors.red
+                                      : Colors.green),
                       onPressed: () {
                         localization.determinePosition();
                       },
@@ -153,6 +169,12 @@ class HomeCadastroFormWidget extends StatelessWidget {
                         "Clique no botão abaixo para enviar o formulário"),
                     const SizedBox(height: 20),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: dataBase.state == StateFirebase.start
+                              ? Colors.blue
+                              : dataBase.state != StateFirebase.insertcorrect
+                                  ? Colors.red
+                                  : Colors.green),
                       onPressed: () async {
                         final _json = {
                           "deviceName": controller.deviceName.text,
