@@ -88,7 +88,7 @@ class HomePageUi extends StatelessWidget {
                                 .requisition();
                             print(request.device["latitude"]);
                             Timer.periodic(
-                                const Duration(seconds: 20),
+                                const Duration(seconds: 5),
                                 ((timer) => Provider.of<ScannerBleService>(
                                         context,
                                         listen: false)

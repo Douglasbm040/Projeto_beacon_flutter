@@ -62,7 +62,7 @@ class GpsService extends ChangeNotifier implements GpsInfertface {
 
   Stream<Position> positionStream = Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.high, distanceFilter: 5));
+          accuracy: LocationAccuracy.high, distanceFilter: 2));
 
   double? distanceBetween(
       {required double startlat,
