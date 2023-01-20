@@ -11,9 +11,11 @@ class FirebaseRepository extends ChangeNotifier implements FirebaseInterface {
   StateRequisition _state = StateRequisition.notrequest;
   final DatabaseReference _dataRef = FirebaseDatabase.instance.ref("Device");
   late StreamSubscription<DatabaseEvent> _dataSubscription;
+  @override
   StateRequisition get state => _state;
   @override
   get device => _device;
+  @override
   requisition() async {
     try {
       final _dataSnapshot = await _dataRef.get();
@@ -33,6 +35,7 @@ class FirebaseRepository extends ChangeNotifier implements FirebaseInterface {
     await _dataRef.set(value);
   }
 */
+  @override
   void dispose() {
     _dataSubscription.cancel();
     super.dispose();

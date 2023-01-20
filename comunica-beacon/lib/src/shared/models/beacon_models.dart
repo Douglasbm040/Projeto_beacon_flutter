@@ -1,4 +1,4 @@
-class Device {
+class BeaconModels {
   String? characteristicUuid;
   String? descricao;
   String? deviceName;
@@ -7,7 +7,7 @@ class Device {
   double? longitude;
   String? serviceUuid;
 
-  Device(
+  BeaconModels(
       {this.characteristicUuid,
       this.descricao,
       this.deviceName,
@@ -16,7 +16,7 @@ class Device {
       this.longitude,
       this.serviceUuid});
 
-  Device.fromJson(Map<String, dynamic> json) {
+  BeaconModels.fromJson(Map<dynamic, dynamic> json) {
     characteristicUuid = json['CharacteristicUuid'];
     descricao = json['descricao'];
     deviceName = json['deviceName'];

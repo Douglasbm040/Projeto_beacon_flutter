@@ -1,5 +1,6 @@
 import 'package:comunica_beacons/src/modules/chat/page/comunication_page.dart';
 import 'package:comunica_beacons/src/modules/database/firebase/repository/firebase_repository.dart';
+import 'package:comunica_beacons/src/modules/gps/services/gps_service.dart';
 import 'package:comunica_beacons/src/modules/home/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
@@ -18,18 +19,25 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider<GpsService>(
+            create: (context) => GpsService(),
+          ),
           ChangeNotifierProvider<FirebaseRepository>(
-              create: (context) => FirebaseRepository()),
+            create: (context) => FirebaseRepository(),
+          ),
           ChangeNotifierProvider<ScannerBleService>(
-              create: (context) => ScannerBleService(ble: _ble)),
+            create: (context) => ScannerBleService(ble: _ble),
+          ),
           ChangeNotifierProvider<ConnectorBleService>(
-              create: ((context) => ConnectorBleService(ble: _ble))),
+            create: ((context) => ConnectorBleService(ble: _ble)),
+          ),
           ChangeNotifierProvider(
-              create: (context) => IntegrationBleService(
-                  writeWithoutResponse: _ble.writeCharacteristicWithoutResponse,
-                  bleDiscoverServices: _ble.discoverServices,
-                  readcharacteristic: _ble.readCharacteristic,
-                  requestSpace: _ble.requestMtu)),
+            create: (context) => IntegrationBleService(
+                writeWithoutResponse: _ble.writeCharacteristicWithoutResponse,
+                bleDiscoverServices: _ble.discoverServices,
+                readcharacteristic: _ble.readCharacteristic,
+                requestSpace: _ble.requestMtu),
+          ),
         ],
         child: MaterialApp(
             title: 'Flutter Demo',

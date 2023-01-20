@@ -12,7 +12,7 @@ enum StateFirebase {
 }
 
 class DataBaseRepository extends ChangeNotifier implements DataBaseInterface {
-  Map _device = {};
+  Map<String,dynamic> _device = {};
   StateFirebase _state = StateFirebase.start;
   late final DatabaseReference _dataRef =
       FirebaseDatabase.instance.ref("Device");
@@ -26,7 +26,7 @@ class DataBaseRepository extends ChangeNotifier implements DataBaseInterface {
   requisition() async {
     try {
       final _dataSnapshot = await _dataRef.get();
-      _device = _dataSnapshot.value as Map;
+      _device = _dataSnapshot.value as Map<String,dynamic>;
       _state = StateFirebase.requistioncorrect;
       notifyListeners();
     } catch (e) {
@@ -35,7 +35,7 @@ class DataBaseRepository extends ChangeNotifier implements DataBaseInterface {
       notifyListeners();
     }
     _dataSubscription = _dataRef.onValue.listen((DatabaseEvent event) {
-      _device = (event.snapshot.value ?? 0) as Map;
+      _device = (event.snapshot.value ?? 0) as Map<String,dynamic>;
       notifyListeners();
     });
   }

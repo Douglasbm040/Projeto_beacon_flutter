@@ -3,6 +3,6 @@ import 'package:interface_beacon/src/modules/database/firebase/repository/databa
 abstract class DataBaseInterface {
   insert({required Map<String, dynamic> value});
   requisition();
-  Map get device;
+  Map<String,dynamic> get device;
   StateFirebase get state;
 }

@@ -1,10 +1,14 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:comunica_beacons/src/modules/bluetoothble/services/conectble_service.dart';
 import 'package:comunica_beacons/src/modules/bluetoothble/services/scannerble_service.dart';
+import 'package:comunica_beacons/src/modules/database/firebase/interface/firebase_interface.dart';
 import 'package:comunica_beacons/src/modules/database/firebase/repository/firebase_repository.dart';
+import 'package:comunica_beacons/src/modules/gps/services/gps_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import '../../../shared/models/beacon_models.dart';
 import '../../../shared/models/ble_device_models.dart';
@@ -14,15 +18,25 @@ class HomePageUi extends StatelessWidget {
     Key? key,
     required this.devices,
     required this.plug,
+    required this.request,
+    required this.gps,
   }) : super(key: key);
 
   final List<DiscoveredDevice> devices;
   final ConnectorBleService plug;
+  final FirebaseInterface request;
+  final GpsService gps;
 
   @override
   Widget build(BuildContext context) {
-    final List<Device> device;
-
+    double lat = 0;
+    double long = 0;
+    gps.positionStream.listen((Position? position) {
+      if (position != null) {
+        lat = position.latitude;
+        long = position.longitude;
+      }
+    });
     return Scaffold(
         /*floatingActionButton: FloatingActionButton(
             onPressed: () {
@@ -68,18 +82,29 @@ class HomePageUi extends StatelessWidget {
                                 ))),
                       ),
                       IconButton(
-                          onPressed: () {
-                            Provider.of<ScannerBleService>(context,
-                                    listen: false)
-                                .scanner();
-                            Provider.of<FirebaseRepository>(context,
+                          onPressed: () async {
+                            await Provider.of<FirebaseRepository>(context,
                                     listen: false)
                                 .requisition();
-                            final request = Provider.of<FirebaseRepository>(
-                                    context,
-                                    listen: false)
-                                .device;
-                           
+                            print(request.device["latitude"]);
+                            Timer.periodic(
+                                const Duration(seconds: 20),
+                                ((timer) => Provider.of<ScannerBleService>(
+                                        context,
+                                        listen: false)
+                                    .scanner(Uuid.parse(
+                                        request.device["serviceUuid"]))));
+
+                            Timer.periodic(const Duration(seconds: 2),
+                                ((timer) async {
+                              print("lat ${lat}");
+                              gps.distanceBetween(
+                                  startlat: lat,
+                                  startlong: long,
+                                  endLat: request.device["latitude"],
+                                  endLong: request.device["longitude"]);
+                              print(gps.distanceInMeters);
+                            }));
                           },
                           icon: const Icon(
                             size: 50,
@@ -90,10 +115,30 @@ class HomePageUi extends StatelessWidget {
                   ),
                 ),
               ),
-              
+              const SizedBox(height: 20),
+              const Text("locais cadastrados"),
+              ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: 1,
+                  //request.device.length == 0 ? 0 : request.device.length,
+                  itemBuilder: ((context, index) => ListTile(
+                        title: const Text("ufes"),
+                        subtitle: Text(
+                            "${gps.distanceInMeters}"), //Text("${request.device["descricao"]}"),
+                      ))),
               const SizedBox(height: 20),
               const Text("Locais perto de você "),
               const SizedBox(height: 20),
+              ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: devices.isEmpty ? 0 : devices.length,
+                  //request.device.length == 0 ? 0 : request.device.length,
+                  itemBuilder: ((context, index) => ListTile(
+                        title: Text("${devices[index].name}"),
+                        subtitle: Text("${devices[index].id}"),
+                      ))),
               ListView(
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,
